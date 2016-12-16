@@ -152,7 +152,7 @@ class CalculatorClient implements \Sabahtalateh\Calc\CalculatorIf {
 
 // HELPER FUNCTIONS AND STRUCTURES
 
-class Calculator_ping_args {
+class Calculator_ping_args extends TBase {
   static $_TSPEC;
 
 
@@ -169,40 +169,16 @@ class Calculator_ping_args {
 
   public function read($input)
   {
-    $xfer = 0;
-    $fname = null;
-    $ftype = 0;
-    $fid = 0;
-    $xfer += $input->readStructBegin($fname);
-    while (true)
-    {
-      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-      if ($ftype == TType::STOP) {
-        break;
-      }
-      switch ($fid)
-      {
-        default:
-          $xfer += $input->skip($ftype);
-          break;
-      }
-      $xfer += $input->readFieldEnd();
-    }
-    $xfer += $input->readStructEnd();
-    return $xfer;
+    return $this->_read('Calculator_ping_args', self::$_TSPEC, $input);
   }
 
   public function write($output) {
-    $xfer = 0;
-    $xfer += $output->writeStructBegin('Calculator_ping_args');
-    $xfer += $output->writeFieldStop();
-    $xfer += $output->writeStructEnd();
-    return $xfer;
+    return $this->_write('Calculator_ping_args', self::$_TSPEC, $output);
   }
 
 }
 
-class Calculator_ping_result {
+class Calculator_ping_result extends TBase {
   static $_TSPEC;
 
 
@@ -219,40 +195,16 @@ class Calculator_ping_result {
 
   public function read($input)
   {
-    $xfer = 0;
-    $fname = null;
-    $ftype = 0;
-    $fid = 0;
-    $xfer += $input->readStructBegin($fname);
-    while (true)
-    {
-      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-      if ($ftype == TType::STOP) {
-        break;
-      }
-      switch ($fid)
-      {
-        default:
-          $xfer += $input->skip($ftype);
-          break;
-      }
-      $xfer += $input->readFieldEnd();
-    }
-    $xfer += $input->readStructEnd();
-    return $xfer;
+    return $this->_read('Calculator_ping_result', self::$_TSPEC, $input);
   }
 
   public function write($output) {
-    $xfer = 0;
-    $xfer += $output->writeStructBegin('Calculator_ping_result');
-    $xfer += $output->writeFieldStop();
-    $xfer += $output->writeStructEnd();
-    return $xfer;
+    return $this->_write('Calculator_ping_result', self::$_TSPEC, $output);
   }
 
 }
 
-class Calculator_calculate_args {
+class Calculator_calculate_args extends TBase {
   static $_TSPEC;
 
   /**
@@ -279,12 +231,7 @@ class Calculator_calculate_args {
         );
     }
     if (is_array($vals)) {
-      if (isset($vals['logid'])) {
-        $this->logid = $vals['logid'];
-      }
-      if (isset($vals['request'])) {
-        $this->request = $vals['request'];
-      }
+      parent::__construct(self::$_TSPEC, $vals);
     }
   }
 
@@ -294,68 +241,16 @@ class Calculator_calculate_args {
 
   public function read($input)
   {
-    $xfer = 0;
-    $fname = null;
-    $ftype = 0;
-    $fid = 0;
-    $xfer += $input->readStructBegin($fname);
-    while (true)
-    {
-      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-      if ($ftype == TType::STOP) {
-        break;
-      }
-      switch ($fid)
-      {
-        case 1:
-          if ($ftype == TType::I64) {
-            $xfer += $input->readI64($this->logid);
-          } else {
-            $xfer += $input->skip($ftype);
-          }
-          break;
-        case 2:
-          if ($ftype == TType::STRUCT) {
-            $this->request = new \Sabahtalateh\Calc\CalcRequest();
-            $xfer += $this->request->read($input);
-          } else {
-            $xfer += $input->skip($ftype);
-          }
-          break;
-        default:
-          $xfer += $input->skip($ftype);
-          break;
-      }
-      $xfer += $input->readFieldEnd();
-    }
-    $xfer += $input->readStructEnd();
-    return $xfer;
+    return $this->_read('Calculator_calculate_args', self::$_TSPEC, $input);
   }
 
   public function write($output) {
-    $xfer = 0;
-    $xfer += $output->writeStructBegin('Calculator_calculate_args');
-    if ($this->logid !== null) {
-      $xfer += $output->writeFieldBegin('logid', TType::I64, 1);
-      $xfer += $output->writeI64($this->logid);
-      $xfer += $output->writeFieldEnd();
-    }
-    if ($this->request !== null) {
-      if (!is_object($this->request)) {
-        throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-      }
-      $xfer += $output->writeFieldBegin('request', TType::STRUCT, 2);
-      $xfer += $this->request->write($output);
-      $xfer += $output->writeFieldEnd();
-    }
-    $xfer += $output->writeFieldStop();
-    $xfer += $output->writeStructEnd();
-    return $xfer;
+    return $this->_write('Calculator_calculate_args', self::$_TSPEC, $output);
   }
 
 }
 
-class Calculator_calculate_result {
+class Calculator_calculate_result extends TBase {
   static $_TSPEC;
 
   /**
@@ -382,12 +277,7 @@ class Calculator_calculate_result {
         );
     }
     if (is_array($vals)) {
-      if (isset($vals['success'])) {
-        $this->success = $vals['success'];
-      }
-      if (isset($vals['e'])) {
-        $this->e = $vals['e'];
-      }
+      parent::__construct(self::$_TSPEC, $vals);
     }
   }
 
@@ -397,62 +287,83 @@ class Calculator_calculate_result {
 
   public function read($input)
   {
-    $xfer = 0;
-    $fname = null;
-    $ftype = 0;
-    $fid = 0;
-    $xfer += $input->readStructBegin($fname);
-    while (true)
-    {
-      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-      if ($ftype == TType::STOP) {
-        break;
-      }
-      switch ($fid)
-      {
-        case 0:
-          if ($ftype == TType::DOUBLE) {
-            $xfer += $input->readDouble($this->success);
-          } else {
-            $xfer += $input->skip($ftype);
-          }
-          break;
-        case 1:
-          if ($ftype == TType::STRUCT) {
-            $this->e = new \Sabahtalateh\Calc\CalculationException();
-            $xfer += $this->e->read($input);
-          } else {
-            $xfer += $input->skip($ftype);
-          }
-          break;
-        default:
-          $xfer += $input->skip($ftype);
-          break;
-      }
-      $xfer += $input->readFieldEnd();
-    }
-    $xfer += $input->readStructEnd();
-    return $xfer;
+    return $this->_read('Calculator_calculate_result', self::$_TSPEC, $input);
   }
 
   public function write($output) {
-    $xfer = 0;
-    $xfer += $output->writeStructBegin('Calculator_calculate_result');
-    if ($this->success !== null) {
-      $xfer += $output->writeFieldBegin('success', TType::DOUBLE, 0);
-      $xfer += $output->writeDouble($this->success);
-      $xfer += $output->writeFieldEnd();
-    }
-    if ($this->e !== null) {
-      $xfer += $output->writeFieldBegin('e', TType::STRUCT, 1);
-      $xfer += $this->e->write($output);
-      $xfer += $output->writeFieldEnd();
-    }
-    $xfer += $output->writeFieldStop();
-    $xfer += $output->writeStructEnd();
-    return $xfer;
+    return $this->_write('Calculator_calculate_result', self::$_TSPEC, $output);
   }
 
 }
 
+class CalculatorProcessor {
+  protected $handler_ = null;
+  public function __construct($handler) {
+    $this->handler_ = $handler;
+  }
+
+  public function process($input, $output) {
+    $rseqid = 0;
+    $fname = null;
+    $mtype = 0;
+
+    $input->readMessageBegin($fname, $mtype, $rseqid);
+    $methodname = 'process_'.$fname;
+    if (!method_exists($this, $methodname)) {
+      $input->skip(TType::STRUCT);
+      $input->readMessageEnd();
+      $x = new TApplicationException('Function '.$fname.' not implemented.', TApplicationException::UNKNOWN_METHOD);
+      $output->writeMessageBegin($fname, TMessageType::EXCEPTION, $rseqid);
+      $x->write($output);
+      $output->writeMessageEnd();
+      $output->getTransport()->flush();
+      return;
+    }
+    $this->$methodname($rseqid, $input, $output);
+    return true;
+  }
+
+  protected function process_ping($seqid, $input, $output) {
+    $args = new \Sabahtalateh\Calc\Calculator_ping_args();
+    $args->read($input);
+    $input->readMessageEnd();
+    $result = new \Sabahtalateh\Calc\Calculator_ping_result();
+    $this->handler_->ping();
+    $bin_accel = ($output instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($output, 'ping', TMessageType::REPLY, $result, $seqid, $output->isStrictWrite());
+    }
+    else
+    {
+      $output->writeMessageBegin('ping', TMessageType::REPLY, $seqid);
+      $result->write($output);
+      $output->writeMessageEnd();
+      $output->getTransport()->flush();
+    }
+  }
+  protected function process_calculate($seqid, $input, $output) {
+    $args = new \Sabahtalateh\Calc\Calculator_calculate_args();
+    $args->read($input);
+    $input->readMessageEnd();
+    $result = new \Sabahtalateh\Calc\Calculator_calculate_result();
+    try {
+      $result->success = $this->handler_->calculate($args->logid, $args->request);
+    } catch (\Sabahtalateh\Calc\CalculationException $e) {
+      $result->e = $e;
+    }
+    $bin_accel = ($output instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($output, 'calculate', TMessageType::REPLY, $result, $seqid, $output->isStrictWrite());
+    }
+    else
+    {
+      $output->writeMessageBegin('calculate', TMessageType::REPLY, $seqid);
+      $result->write($output);
+      $output->writeMessageEnd();
+      $output->getTransport()->flush();
+    }
+  }
+}
 

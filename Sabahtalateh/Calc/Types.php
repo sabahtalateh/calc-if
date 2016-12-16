@@ -30,7 +30,7 @@ final class Operation {
   );
 }
 
-class CalcRequest {
+class CalcRequest extends TBase {
   static $_TSPEC;
 
   /**
@@ -64,15 +64,7 @@ class CalcRequest {
         );
     }
     if (is_array($vals)) {
-      if (isset($vals['num1'])) {
-        $this->num1 = $vals['num1'];
-      }
-      if (isset($vals['num2'])) {
-        $this->num2 = $vals['num2'];
-      }
-      if (isset($vals['op'])) {
-        $this->op = $vals['op'];
-      }
+      parent::__construct(self::$_TSPEC, $vals);
     }
   }
 
@@ -82,71 +74,11 @@ class CalcRequest {
 
   public function read($input)
   {
-    $xfer = 0;
-    $fname = null;
-    $ftype = 0;
-    $fid = 0;
-    $xfer += $input->readStructBegin($fname);
-    while (true)
-    {
-      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-      if ($ftype == TType::STOP) {
-        break;
-      }
-      switch ($fid)
-      {
-        case 1:
-          if ($ftype == TType::DOUBLE) {
-            $xfer += $input->readDouble($this->num1);
-          } else {
-            $xfer += $input->skip($ftype);
-          }
-          break;
-        case 2:
-          if ($ftype == TType::DOUBLE) {
-            $xfer += $input->readDouble($this->num2);
-          } else {
-            $xfer += $input->skip($ftype);
-          }
-          break;
-        case 3:
-          if ($ftype == TType::I32) {
-            $xfer += $input->readI32($this->op);
-          } else {
-            $xfer += $input->skip($ftype);
-          }
-          break;
-        default:
-          $xfer += $input->skip($ftype);
-          break;
-      }
-      $xfer += $input->readFieldEnd();
-    }
-    $xfer += $input->readStructEnd();
-    return $xfer;
+    return $this->_read('CalcRequest', self::$_TSPEC, $input);
   }
 
   public function write($output) {
-    $xfer = 0;
-    $xfer += $output->writeStructBegin('CalcRequest');
-    if ($this->num1 !== null) {
-      $xfer += $output->writeFieldBegin('num1', TType::DOUBLE, 1);
-      $xfer += $output->writeDouble($this->num1);
-      $xfer += $output->writeFieldEnd();
-    }
-    if ($this->num2 !== null) {
-      $xfer += $output->writeFieldBegin('num2', TType::DOUBLE, 2);
-      $xfer += $output->writeDouble($this->num2);
-      $xfer += $output->writeFieldEnd();
-    }
-    if ($this->op !== null) {
-      $xfer += $output->writeFieldBegin('op', TType::I32, 3);
-      $xfer += $output->writeI32($this->op);
-      $xfer += $output->writeFieldEnd();
-    }
-    $xfer += $output->writeFieldStop();
-    $xfer += $output->writeStructEnd();
-    return $xfer;
+    return $this->_write('CalcRequest', self::$_TSPEC, $output);
   }
 
 }
@@ -177,12 +109,7 @@ class CalculationException extends TException {
         );
     }
     if (is_array($vals)) {
-      if (isset($vals['code'])) {
-        $this->code = $vals['code'];
-      }
-      if (isset($vals['message'])) {
-        $this->message = $vals['message'];
-      }
+      parent::__construct(self::$_TSPEC, $vals);
     }
   }
 
@@ -192,59 +119,11 @@ class CalculationException extends TException {
 
   public function read($input)
   {
-    $xfer = 0;
-    $fname = null;
-    $ftype = 0;
-    $fid = 0;
-    $xfer += $input->readStructBegin($fname);
-    while (true)
-    {
-      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-      if ($ftype == TType::STOP) {
-        break;
-      }
-      switch ($fid)
-      {
-        case 1:
-          if ($ftype == TType::I64) {
-            $xfer += $input->readI64($this->code);
-          } else {
-            $xfer += $input->skip($ftype);
-          }
-          break;
-        case 2:
-          if ($ftype == TType::STRING) {
-            $xfer += $input->readString($this->message);
-          } else {
-            $xfer += $input->skip($ftype);
-          }
-          break;
-        default:
-          $xfer += $input->skip($ftype);
-          break;
-      }
-      $xfer += $input->readFieldEnd();
-    }
-    $xfer += $input->readStructEnd();
-    return $xfer;
+    return $this->_read('CalculationException', self::$_TSPEC, $input);
   }
 
   public function write($output) {
-    $xfer = 0;
-    $xfer += $output->writeStructBegin('CalculationException');
-    if ($this->code !== null) {
-      $xfer += $output->writeFieldBegin('code', TType::I64, 1);
-      $xfer += $output->writeI64($this->code);
-      $xfer += $output->writeFieldEnd();
-    }
-    if ($this->message !== null) {
-      $xfer += $output->writeFieldBegin('message', TType::STRING, 2);
-      $xfer += $output->writeString($this->message);
-      $xfer += $output->writeFieldEnd();
-    }
-    $xfer += $output->writeFieldStop();
-    $xfer += $output->writeStructEnd();
-    return $xfer;
+    return $this->_write('CalculationException', self::$_TSPEC, $output);
   }
 
 }
