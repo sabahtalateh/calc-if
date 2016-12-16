@@ -13,9 +13,7 @@
         "apache/thrift": "^0.9.3"
     },
     "autoload": {
-        "psr-4": {
-            "Sabahtalateh\\Calc\\": "interface/Sabahtalateh/Calc/"
-        }
+        "classmap": ["Sabahtalateh"]
     },
     "minimum-stability": "dev",
     "prefer-stable": true
